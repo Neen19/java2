@@ -1,23 +1,51 @@
 package ru.sarmosov.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ru.sarmosov.enums.Subject;
+import ru.sarmosov.util.SubjectKeyDeserializer;
+import ru.sarmosov.util.SubjectKeySerializer;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Getter
-@Setter
 public class Student extends Person {
 
-    private final Map<Subject, Double> averageGrades;
+    @JsonSerialize(keyUsing = SubjectKeySerializer.class)
+    @JsonDeserialize(keyUsing = SubjectKeyDeserializer.class)
+    private Map<Subject, Double> averageGrades;
 
-    public Student(String fullName, int birthYear, String phoneNumber, List<Subject> subjects) {
-        super(fullName, birthYear, phoneNumber);
-        this.averageGrades = subjects.stream()
-                .collect(Collectors.toMap(subject -> subject, _ -> 0.0));
+    public Student() {
+        super(null, 0, null);
+        averageGrades = new LinkedHashMap<>();
     }
 
+    public Student(String fullName, int birthYear, String phoneNumber, Map<Subject, Double> averageGrades) {
+        super(fullName, birthYear, phoneNumber);
+        this.averageGrades = averageGrades;
+    }
+
+    public Student(Student other) {
+        super(other.fullName, other.birthYear, other.phoneNumber);
+        this.averageGrades = other.averageGrades;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "fullName='" + fullName + '\'' +
+                ", birthYear=" + birthYear +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", averageGrades=" + averageGrades +
+                '}';
+    }
+
+    public Map<Subject, Double> getAverageGrades() {
+        return averageGrades;
+    }
+
+    public void setAverageGrades(Map<Subject, Double> averageGrades) {
+        this.averageGrades = averageGrades;
+    }
 }

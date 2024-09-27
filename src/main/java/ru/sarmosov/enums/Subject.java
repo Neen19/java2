@@ -1,5 +1,6 @@
 package ru.sarmosov.enums;
 
+
 public enum Subject {
     MATH,
     SCIENCE,
@@ -7,6 +8,9 @@ public enum Subject {
     ENGLISH,
     PHYSICS,
     CHEMISTRY,
-    BIOLOGY
+    BIOLOGY;
+
 }
+
+
 

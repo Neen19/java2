@@ -1,25 +1,15 @@
 package ru.sarmosov.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public abstract class Person {
 
     protected final String fullName;
     protected final int birthYear;
     protected final String phoneNumber;
-    protected static int _id = 0;
-    protected int id;
-    protected Class<?> clazz;
 
-    protected Person(String phoneNumber, int birthYear, String fullName, Class<?> clazz) {
+    protected Person(String phoneNumber, int birthYear, String fullName) {
         this.phoneNumber = phoneNumber;
         this.birthYear = birthYear;
         this.fullName = fullName;
-        this.clazz = clazz;
-        _id++;
     }
 
     @Override
@@ -29,5 +19,17 @@ public abstract class Person {
                 ", birthYear=" + birthYear +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public int getBirthYear() {
+        return birthYear;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

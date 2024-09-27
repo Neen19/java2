@@ -6,10 +6,12 @@ import java.io.IOException;
 
 public interface DAOInterface {
 
-    void save(Person person, String id) throws IOException;
+    void save(Person person) throws IOException;
 
-    Person findById(String id, Class<? extends Person> clazz) throws IOException;
+    Person findById(String id) throws IOException;
 
-    void delete(String id);
+    void delete(String id) throws IOException;
+
+    Person update(String id, Person person) throws IOException;
 
 }

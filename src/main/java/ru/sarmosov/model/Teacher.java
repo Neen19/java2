@@ -1,20 +1,33 @@
 package ru.sarmosov.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ru.sarmosov.enums.Subject;
+import ru.sarmosov.util.SubjectKeyDeserializer;
+import ru.sarmosov.util.SubjectKeySerializer;
 
-@Getter
-@Setter
 public class Teacher extends Person {
 
-    private final Subject subject;
-    private final int workingHours;
+    @JsonSerialize(keyUsing = SubjectKeySerializer.class)
+    @JsonDeserialize(keyUsing = SubjectKeyDeserializer.class)
+    private Subject subject;
+    private int workingHours;
+
+    public Teacher() {
+        super(null, 0, null);
+    }
 
     public Teacher(String fullName, int birthYear, String phoneNumber, Subject subject, int workingHours) {
         super(fullName, birthYear, phoneNumber);
         this.subject = subject;
         this.workingHours = workingHours;
+    }
+
+    public Teacher(Teacher other) {
+        super(other.fullName, other.birthYear, other.phoneNumber);
+        this.subject = other.subject;
+        this.workingHours = other.workingHours;
+
     }
 
     @Override
@@ -24,5 +37,21 @@ public class Teacher extends Person {
                 ", subject=" + subject +
                 ", workingHours=" + workingHours +
                 '}';
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public int getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(int workingHours) {
+        this.workingHours = workingHours;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }
