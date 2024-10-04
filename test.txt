@@ -1,0 +1,1 @@
+{"fullName":"phone","birthYear":2206,"phoneNumber":"name","averageGrades":{"CHEMISTRY":12.0}}
