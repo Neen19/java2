@@ -5,11 +5,7 @@ import org.mapstruct.factory.Mappers;
 import ru.sarmosov.dao.PeopleDAO;
 import ru.sarmosov.dao.PersonInfoDAO;
 import ru.sarmosov.enums.Subject;
-import ru.sarmosov.mapper.EntityMapper;
-import ru.sarmosov.model.Command;
-import ru.sarmosov.model.Person;
-import ru.sarmosov.model.Student;
-import ru.sarmosov.model.Teacher;
+import ru.sarmosov.model.*;
 import ru.sarmosov.service.PeopleService;
 import ru.sarmosov.util.JsonUtil;
 
@@ -19,8 +15,6 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Test {
-
-    private final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
 
     @org.junit.jupiter.api.Test
     void test() throws IOException {
@@ -33,12 +27,12 @@ public class Test {
     @org.junit.jupiter.api.Test
     void tetet() throws IOException {
         Command command = new Command();
-        command.setCommand("UPDATE");
-        command.setId("28");
+        command.setCommand("CREATE");
+//        command.setId("28");
         command.setStudent(true);
-//        command.setStudentObj(new Student("name", 2004, "123321", Map.of(Subject.MATH, 12.)));
-        command.setFieldName("averageGrades");
-        command.setArg(Map.of(Subject.BIOLOGY, 122., Subject.MATH, 123.));
+        command.setStudentObj(new Student("name", 2004, "123321", Map.of(Subject.MATH, 12.)));
+//        command.setFieldName("averageGrades");
+        command.setArg(Map.of(Subject.BIOLOGY, 0.));
         File file = new File("commandsfolder/com.json");
         JsonUtil.saveToFile(command, file);
     }
@@ -51,5 +45,7 @@ public class Test {
         PeopleService service = new PeopleService(new PeopleDAO());
         service.updatePersonField("25", Subject.MATH, "subject");
     }
+
+
 
 }

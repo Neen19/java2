@@ -1,7 +1,4 @@
 package ru.sarmosov.dao;
-
-import org.mapstruct.factory.Mappers;
-import ru.sarmosov.mapper.EntityMapper;
 import ru.sarmosov.model.Person;
 import ru.sarmosov.model.PersonInfo;
 import ru.sarmosov.model.Student;
@@ -12,14 +9,11 @@ import static ru.sarmosov.dao.PersonInfoDAO.id;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Scanner;
 
 public class PeopleDAO implements DAOInterface {
 
     private final File peopleDir = new File("person_data");
     private final PersonInfoDAO personInfoDAO;
-    private final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
 
     public PeopleDAO() throws IOException {
         personInfoDAO = new PersonInfoDAO(new File("personinfodir"));
@@ -30,7 +24,7 @@ public class PeopleDAO implements DAOInterface {
 
     public void save(Person person) throws IOException {
         File file = new File(peopleDir, id + ".json");
-        PersonInfo personInfo = mapper.toEntity(person);
+        PersonInfo personInfo = new PersonInfo();
         setClass(personInfo, person);
         JsonUtil.saveToFile(person, file);
         personInfoDAO.save(personInfo);
@@ -60,7 +54,6 @@ public class PeopleDAO implements DAOInterface {
 
     public Person update(String personId, Person person) throws IOException {
         File file = new File(peopleDir, personId + ".json");
-        Field[] field = person.getClass().getDeclaredFields();
         JsonUtil.saveToFile(person, file);
         return person;
     }

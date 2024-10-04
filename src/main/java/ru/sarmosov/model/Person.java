@@ -2,9 +2,9 @@ package ru.sarmosov.model;
 
 public abstract class Person {
 
-    protected final String fullName;
-    protected final int birthYear;
-    protected final String phoneNumber;
+    protected String fullName;
+    protected int birthYear;
+    protected String phoneNumber;
 
     protected Person(String phoneNumber, int birthYear, String fullName) {
         this.phoneNumber = phoneNumber;
@@ -32,4 +32,17 @@ public abstract class Person {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 }

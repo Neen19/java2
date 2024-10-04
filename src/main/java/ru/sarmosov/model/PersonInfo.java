@@ -20,4 +20,12 @@ public class PersonInfo {
     public void setTeacher(boolean teacher) {
         isTeacher = teacher;
     }
+
+    @Override
+    public String toString() {
+        return "PersonInfo{" +
+                "isStudent=" + isStudent +
+                ", isTeacher=" + isTeacher +
+                '}';
+    }
 }

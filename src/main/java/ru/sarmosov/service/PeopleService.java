@@ -5,6 +5,7 @@ import ru.sarmosov.enums.Subject;
 import ru.sarmosov.model.Person;
 import ru.sarmosov.model.Student;
 import ru.sarmosov.model.Teacher;
+import ru.sarmosov.util.FieldUtil;
 import ru.sarmosov.util.ReflectUtils;
 
 import java.io.IOException;
@@ -38,26 +39,7 @@ public class PeopleService {
 
     public Person updatePersonField(String id, Object arg, String fieldName) throws IOException, IllegalAccessException, NoSuchFieldException {
         Person person = dao.findById(id);
-        if (!isFieldCorrect(person.getClass(), fieldName)) {
-            throw new IOException("нет такого поля");
-        }
-        Field field;
-        try {
-             field = person.getClass().getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            field = person.getClass().getSuperclass().getDeclaredField(fieldName);
-        }
-        Class<?> clazz = field.getType();
-        if (clazz.isEnum()) {
-            arg = Enum.valueOf((Class<Enum>) clazz, (String) arg);
-        }
-        if (Map.class.isAssignableFrom(clazz)) {
-            ((Map<String, ?>) arg).keySet().stream()
-                    .map(Subject::valueOf);
-        }
-        ReflectUtils.cast(arg, clazz);
-        field.setAccessible(true);
-        field.set(person, arg);
+        FieldUtil.updateField(fieldName, person, arg);
         return dao.update(id, person);
     }
 
